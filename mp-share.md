@@ -140,17 +140,17 @@ HTTP OR SOCKET
 
 - ##### 视图层
 
-- webview 线程只负责UI渲染工作，把逻辑层撇开到单独的线程中，加快了UI渲染速度。
+- webview 线程只负责 UI 渲染工作，把逻辑层撇开到单独的线程中，加快了 UI 渲染速度。
 
-- 结合原来组件充分利用native的渲染，更好的提升了渲染性能。
+- 结合原来组件充分利用 native 的渲染，更好的提升了渲染性能。
 
 - ##### 逻辑层
 
-- iOS下的 JavaScriptCore 框架，安卓下腾讯 x5 内核的 JsCore。
+- iOS 下的 JavaScriptCore 框架，安卓下腾讯 x5 内核的 JsCore。
 
 - 通过提供一个沙箱环境来运行开发者的 JavaScript 代码来解决。
 
-- ##### navtive层
+- ##### navtive 层
 
 - 视图、逻辑、网络间的数据通讯
 
@@ -174,7 +174,7 @@ HTTP OR SOCKET
 
 - 逻辑层通过宿主环境发送数据到视图层。
 
-- 逻辑层通过宿主环境调用native api。
+- 逻辑层通过宿主环境调用 native api。
 
 - this.setData({...}, callback);
 
@@ -197,7 +197,6 @@ HTTP OR SOCKET
 ### 属性
 
 ![](./public/p5.png)
-
 
 <slide :class="aligncenter">
 
@@ -231,7 +230,6 @@ handle1 -> handle2 -> handle3
 
 :::column{.align-left}
 
-
 ```html
 <view id="v3" bind:tap="handle3">
   <view id="v2" catch:tap="handle2">
@@ -243,7 +241,6 @@ handle1 -> handle2 -> handle3
 ---
 
 handle1 -> handle2
-
 
 <slide :class="aligncenter">
 
@@ -257,7 +254,6 @@ handle1 -> handle2
 
 :::column{.align-left}
 
-
 ```html
 <view id="v2" bind:tap="handle4" capture-bind:tap="handle3">
   <view id="v1" bind:tap="handle1" capture-bind:tap="handle2">click</view>
@@ -267,7 +263,6 @@ handle1 -> handle2
 ---
 
 handle3 -> handle2 -> handle1 -> handle4
-
 
 <slide :class="aligncenter">
 
@@ -279,17 +274,13 @@ handle3 -> handle2 -> handle1 -> handle4
 
 :::column{.align-left}
 
-
 ```html
-<view id="v2" bind:tap="handle1" >
-  <view id="v1">click</view>
-</view>
+<view id="v2" bind:tap="handle1"> <view id="v1">click</view> </view>
 ```
 
 ---
 
-handle4 事件里的 target为v1
-
+handle4 事件里的 target 为 v1
 
 <slide :class="aligncenter">
 
@@ -300,7 +291,6 @@ handle4 事件里的 target为v1
 ### transitionend
 
 过渡动画结束后会调用
-
 
 <slide :class="aligncenter">
 
@@ -315,18 +305,17 @@ handle4 事件里的 target为v1
 ```javascript
 App({
   onLaunch(options) {
-    console.info('App onLaunch', options);
+    console.info("App onLaunch", options);
   },
   onShow(options) {
-    console.info('App onShow', options);
+    console.info("App onShow", options);
   },
   onHide() {
-    console.info('App onHide');
+    console.info("App onHide");
   },
   onError(msg) {},
   globalData: {}
 });
-
 ```
 
 ---
@@ -334,24 +323,28 @@ App({
 ```javascript
 Page({
   onLoad(options) {
-    console.info('page index onLoad options包含了与些页面有关的参数', options);
+    console.info("page index onLoad options包含了与些页面有关的参数", options);
   },
   onShow(options) {
-    console.info('page index onShow 页面显示时调用，这里并没有options', options);
-    console.info('page index all pages', getCurrentPages());
+    console.info(
+      "page index onShow 页面显示时调用，这里并没有options",
+      options
+    );
+    console.info("page index all pages", getCurrentPages());
   },
   onReady() {
-    console.info('page index onReady 页面没被销毁前只会触发1次，表示页面已经准备妥当，在逻辑层就可以和视图层进行交互了。');
+    console.info(
+      "page index onReady 页面没被销毁前只会触发1次，表示页面已经准备妥当，在逻辑层就可以和视图层进行交互了。"
+    );
   },
   onHide() {
-    console.info('page index onHide 页面进入后台时调用');
+    console.info("page index onHide 页面进入后台时调用");
   },
   onUnload() {
-    console.info('page index onUnload 页面从页面栈移出前调用。');
+    console.info("page index onUnload 页面从页面栈移出前调用。");
   }
 });
 ```
-
 
 ---
 
@@ -364,7 +357,12 @@ Component({
     hide() {
       console.info('page hide')
     }
-  }
+  },
+  lifetimes: {
+    attached() { },
+    moved() { },
+    detached() { },
+  },
 });
 ```
 
@@ -374,11 +372,9 @@ Component({
 架构设计 -》 生命周期
 :::
 
-### app onLaunch 里option的参数
+### app onLaunch 里 option 的参数
 
 ![](./public/p6.png)
-
-
 
 <slide :class="aligncenter">
 
@@ -396,29 +392,27 @@ Component({
 
 - reLaunch
 
-
-
-
-
 <slide :class="aligncenter">
 
 :::header
 架构设计 -》 生命周期
 :::
 
-### 实践性TIP
+### 实践性 TIP
 
 - 不要在 onLaunch 的时候调用 getCurrentPages()
+
+- wx.setNavigationBarTitle 写在 onReady 事件里
 
 - 始终注意着页面栈变化。
 
 - tabbar 一旦加载即使在页面栈中移除也不会被销毁。
 
-- 页面栈数量10
+- 页面栈数量 10
 
-- setData() 次数和数据量尽可能小
+- setData() 次数和数据量尽可能小，数据限制 1024kb
 
-- 入口页面把与请求有的东西放在onShow里
+- 入口页面把与请求有的东西放在 onShow 里
 
 <slide :class="aligncenter">
 
@@ -442,25 +436,261 @@ export const getParams = () => {
   let options = currentPage.options || {};
   return options;
 };
-
 ```
 
 ---
 
-- 因为page onShow里取不到。
+- 因为 page onShow 里取不到。
 
 - 你可能要在组件中获取页面参数。
 
-- 因为小程序在navigate back来 back去的时候参数可能会错乱。
-
+- 因为小程序在 navigate back 来 back 去的时候参数可能会错乱。
 
 <slide :class="aligncenter">
 
 :::header
-架构设计 -》 tabbar方案
+架构设计 -》 运行更新机制
 :::
 
-### tabbar方案
+### 冷启动与热启动
+
+- 冷启动：是用户首次打开或小程序被微信主动销毁后再次打开的情况
+- 热启动：后台态的小程序切换到前台
+- 热启动所有状态都会保留
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 运行更新机制
+:::
+
+### 运行时销毁时机
+
+- 后台 5 分钟会被系统销毁
+- 5 秒间隔内连续收到两次及以上系统内存告警时
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 运行更新机制
+:::
+
+### 更新机制
+
+小程序在冷启动时会检查更新，并异步下载代码包
+
+- 体验版测试时退下微信进程。
+- 可以使用 wx.getUpdateManager API 进行处理。
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 组件
+:::
+
+### 组件
+
+小程序里组件是 page 的赶集
+
+```javascript
+
+# /pages/a/index.json
+{
+  "usingComponents": {}
+}
+
+# /pages/a/index.js
+Component({
+
+  properties: {
+    paramA: Number,
+    paramB: String,
+  },
+
+  methods: {
+    onLoad() {
+      this.data.paramA // 页面参数 paramA 的值
+      this.data.paramB // 页面参数 paramB 的值
+    }
+  }
+
+})
+
+```
+
+-
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 组件
+:::
+
+### 组件间通讯方式
+
+- 属性值传递
+- 事件系统
+- selectComponent
+- relations
+- slot
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 组件
+:::
+
+### 数据的监听
+
+```javascript
+Component({
+  observers: {
+    "firstName, lastName": function(fn, ln) {
+      this.setData({
+        fullName: fn + ln
+      });
+    }
+  }
+});
+```
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 组件
+:::
+
+### 小程序里的 mixin 组件 behaviors
+
+:::column
+
+```javascript
+module.exports = Behavior({
+  behaviors: [],
+  properties: {
+    myBehaviorProperty: {
+      type: String
+    }
+  },
+  data: {
+    myBehaviorData: {}
+  },
+  attached() {},
+  methods: {
+    myBehaviorMethod() {}
+  }
+});
+```
+
+---
+
+```javascript
+const myBehavior = require("my-behavior");
+Component({
+  behaviors: [myBehavior],
+  properties: {
+    myProperty: {
+      type: String
+    }
+  },
+  data: {
+    myData: {}
+  },
+  attached() {},
+  methods: {
+    myMethod() {}
+  }
+});
+```
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 组件
+:::
+
+### 计算属性
+
+自定义组件扩展 definitionFilter，是提供了修改自定义组件定义段的能力
+
+[:fa-home: Computed](https://github.com/wechat-miniprogram/computed){.button.ghost}
+
+```javascript
+const beh = require("./behavior.js");
+Component({
+  behaviors: [beh],
+  data: {
+    a: 0
+  },
+  computed: {
+    b() {
+      return this.data.a + 100;
+    }
+  },
+  methods: {
+    onTap() {
+      this.setData({
+        a: ++this.data.a
+      });
+    }
+  }
+});
+```
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 插件
+:::
+
+### 插件
+
+可以是页面的组合，封装可复用的功能和服务
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 rpx 单位
+:::
+
+### 相对单位 rpx
+
+设计师以 iphone6 作为视觉稿的标准
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 wxs
+:::
+
+### wxs
+
+- 可用于高性能动效，数据过滤、修饰。
+
+- 不能使用 es6 相关的东西。
+
+<slide :class="aligncenter">
+
+### 小程序工程化实践
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 多线程
+:::
+
+### 多线程 worker
+
+可以把结果返回到小程序主线程
+
+<slide :class="aligncenter">
+
+:::header
+架构设计 -》 tabbar 方案
+:::
+
+### tabbar 方案
+
 建议设计时尽可能使用小程序默认配置方案
 
 :::column{.align-left}
@@ -469,19 +699,19 @@ export const getParams = () => {
 
 - 体验流畅
 - 外观具有很大的局限性
-- 尺寸为 81px * 81px，偏差1px可能都会有很大程度上的失真。
+- 尺寸为 81px \* 81px，偏差 1px 可能都会有很大程度上的失真。
 
 ---
 
-##### 基础库 2.5.0 后的custom方案
+##### 基础库 2.5.0 后的 custom 方案
 
 - 外观可以自主定制，体验流畅
-- 依然存在自定义mask无法查档tabbar问题
+- 依然存在自定义 mask 无法查档 tabbar 问题
 
 ---
 
 ##### wx.hideTabBar(Object object)
 
-- 用自定义组件方式实现tabbar
-- 在tabbar page时调用wx.hideTabBar(Object object)把真实的隐藏掉
+- 用自定义组件方式实现 tabbar
+- 在 tabbar page 时调用 wx.hideTabBar(Object object)把真实的隐藏掉
 - 第一次点击时会有晃动的不良体验
