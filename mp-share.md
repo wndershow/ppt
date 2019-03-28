@@ -15,8 +15,6 @@ By jiazhen.ding {.text-intro}
 
 :::flexblock
 
-## 特点
-
 ## 架构设计
 
 ## 工程化实践
@@ -61,7 +59,7 @@ By jiazhen.ding {.text-intro}
 
 ### Web 离线存储
 
-微信 web 离线存储加速文案，一定程度上降低了白屏的不良体验
+微信 web 离线存储加速方案，一定程度上降低了白屏的不良体验，但不能满足复杂页面。
 
 ---
 
@@ -140,11 +138,11 @@ HTTP OR SOCKET
 
 - iOS 下的 JavaScriptCore 框架，安卓下腾讯 x5 内核的 JsCore。
 
-- 通过提供一个沙箱环境来运行开发者的 JavaScript 代码来解决。
+- 通过提供一个沙箱环境来运行开发者的 JavaScript。
 
 - ##### navtive 层
 
-- 视图、逻辑、网络间的数据通讯
+- 视图、逻辑、网络及设备间的数据通讯
 
 <slide :class="aligncenter">
 
@@ -162,7 +160,7 @@ HTTP OR SOCKET
 
 ---
 
-- 视图层通过宿主环境发送下事件数据到逻辑层。
+- 视图层通过宿主环境发送事件数据到逻辑层。
 
 - 逻辑层通过宿主环境发送数据到视图层。
 
@@ -219,6 +217,7 @@ handle1 -> handle2 -> handle3
 :::
 
 ### catch 用于阻止事件冒泡
+没有e.stopPropagation
 
 :::column{.align-left}
 
@@ -486,7 +485,7 @@ export const getParams = () => {
 
 ### 组件
 
-小程序里组件是 page 的赶集
+小程序里组件是 page 的赶集，可以把page定义为Component的形式
 
 ```javascript
 
@@ -516,7 +515,7 @@ Component({
 
 -
 
-<slide :class="aligncenter">
+<slide :class="aligncenter" data-transition="newspaper">
 
 :::header
 架构设计 -》 组件
@@ -529,8 +528,9 @@ Component({
 - selectComponent
 - relations
 - slot
+{.build}
 
-<slide :class="aligncenter">
+<slide :class="aligncenter" data-transition="slide3">
 
 :::header
 架构设计 -》 组件
@@ -556,7 +556,7 @@ Component({
 架构设计 -》 组件
 :::
 
-### 小程序里的 mixin 组件 behaviors
+### 小程序里的 mixin, 组件 behaviors
 
 :::column
 
@@ -722,6 +722,15 @@ Component({
 
 ![](./public/Snip20190328_6.png)
 
+<slide :class="aligncenter">
+
+:::header
+工程化实践 -》 Promise.all
+:::
+
+### Promise.all
+
+Promise.all([])
 
 <slide :class="aligncenter">
 :::header
@@ -810,7 +819,7 @@ Component({
 :::
 
 ### 样式方案
-定义设计标准
+定义设计标准，间距、大小、颜色
 
 <slide :class="aligncenter">
 :::header
@@ -1016,6 +1025,7 @@ button::after{
 - 注意setTimeout setInterval 在页面转场后的清理
 - 事件处理时组件的data放入尽可能少的数据
 - 尽量避免页面里定义onPageScroll，注意防抖
+{.build}
 
 <slide :class="aligncenter">
 :::header
@@ -1075,6 +1085,7 @@ button::after{
 - auth page里进入登录确认用户身份
 - auth page认证成功后跳转到入口页
 - 入口业访问业务接口获取业务数据
+{.build}
 
 <slide :class="aligncenter">
 :::header
