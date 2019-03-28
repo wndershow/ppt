@@ -17,13 +17,11 @@ By jiazhen.ding {.text-intro}
 
 ## 特点
 
-## 小程序的架构设计
+## 架构设计
 
 ## 工程化实践
 
 ## 认证授权
-
-## 开发工具与 DEBUG
 
 ## 性能优化
 
@@ -31,17 +29,11 @@ By jiazhen.ding {.text-intro}
 
 ## 引流有关
 
-## 日志监控与数据分析
-
 ## 模板消息处理
 
 ## 状态管理
 
-## 组件与插件
-
-## API 有关
-
-## 视图层
+## 开发工具
 
 :::
 
@@ -350,6 +342,10 @@ Page({
 
 ```javascript
 Component({
+  created() {
+    // 这里可以给组件添加一些自定义属性，不好调用setData()
+  },
+  ready() {},
   pageLifetimes() {
     show() {
       console.info('page show')
@@ -410,7 +406,7 @@ Component({
 
 - 页面栈数量 10
 
-- setData() 次数和数据量尽可能小，数据限制 1024kb
+- setData() 次数和数据量尽可能小，数据限制 1024kb，与视图有关的放this当前组件里
 
 - 入口页面把与请求有的东西放在 onShow 里
 
@@ -671,10 +667,6 @@ Component({
 
 <slide :class="aligncenter">
 
-### 小程序工程化实践
-
-<slide :class="aligncenter">
-
 :::header
 架构设计 -》 多线程
 :::
@@ -685,13 +677,84 @@ Component({
 
 <slide :class="aligncenter">
 
+### 小程序工程化实践
+
+
+<slide :class="aligncenter">
+
 :::header
-架构设计 -》 tabbar 方案
+工程化实践 -》 开发目录结构
+:::
+
+### 开发目录结构
+
+:::column
+
+![](./public/Snip20190328_2.png)
+
+---
+
+- page 组件化
+- 中线风格命名
+- 页面模块名index
+
+<slide :class="aligncenter">
+
+:::header
+工程化实践 -》 框架选择
+:::
+
+### 框架选择
+原生态的mina
+
+- 完善的组件化方案
+- 出了问题容易定位
+
+<slide :class="aligncenter">
+
+:::header
+工程化实践 -》 异步处理方案
+:::
+
+### 异步处理方案
+
+![](./public/Snip20190328_3.png)
+
+![](./public/Snip20190328_6.png)
+
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 代码格式化方案
+:::
+
+### 代码格式化方案
+代码保存的时候格式化
+
+- .prettier
+- 编辑器prettier插件
+
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 多环境方案
+:::
+
+### 多环境方案
+每个环境一套配置
+
+![](./public/Snip20190328_4.png)
+
+
+<slide :class="aligncenter">
+
+:::header
+工程化实践 -》 tabbar 方案
 :::
 
 ### tabbar 方案
 
-建议设计时尽可能使用小程序默认配置方案
+建议设计时尽可能使用小程序默认配置方案。
 
 :::column{.align-left}
 
@@ -715,3 +778,337 @@ Component({
 - 用自定义组件方式实现 tabbar
 - 在 tabbar page 时调用 wx.hideTabBar(Object object)把真实的隐藏掉
 - 第一次点击时会有晃动的不良体验
+
+
+<slide :class="aligncenter">
+
+:::header
+工程化实践 -》 返回首页
+:::
+
+### 返回首页方案
+群消息卡片里进入小程序，如何返回首页
+
+- 自定义导航栏
+- 先进入index，从index跳转到相当页面
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 js 生态
+:::
+
+### js 生态
+通过npm构建小范围使用
+
+- npm i dayjs -s
+- ![](./public/Snip20190328_5.png)
+
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 样式方案
+:::
+
+### 样式方案
+定义设计标准
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 样式方案
+:::
+
+### 原子类组合 + 组件化
+
+[tachyons](https://github.com/tachyons-css/tachyons)
+
+```html
+<view class="flex br ba gray shawdow">
+  <view class="pl3"></view>
+  <view class="flex-auto"></view>
+</view>
+```
+
+[ColorUI](https://github.com/weilanwl/ColorUI)
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 样式方案
+:::
+
+### base64技巧
+
+- iconfont字体图标
+- 背景图
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 样式方案
+:::
+
+### textarea穿透
+
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 样式方案
+:::
+
+### 如何使用less
+不使用
+
+- 样式域
+- 原子类（变量）
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 样式方案
+:::
+
+### 动效交互
+
+- wx.createIntersectionObserver 相并监听
+- ripples.wxss
+- [拖动排序](https://github.com/kevenfeng/DragSort)
+
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 样式方案
+:::
+
+### 高清适配
+
+```css
+media only screen and (-webkit-min-device-pixel-ratio:2)
+media only screen and (-webkit-min-device-pixel-ratio:3)
+```
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 API对接
+:::
+
+### API联调方案
+服务端尽可能使用graphql服务
+
+- 并发限制
+
+<slide :class="aligncenter">
+:::header
+工程化实践 -》 发布与持续集成方案
+:::
+
+### 发布与持续集成
+开发者工具的接口能力（命令行上传代码）
+
+- 命令行启动工具、登录、提交预览、上传代码、自动化测试
+- 小程序可以设置不向后兼容 wx.getSystemInfoSync，wx.canIUse
+
+<slide :class="aligncenter">
+### 引流
+更好的利用微信生态
+
+
+<slide :class="aligncenter">
+:::header
+引流 -》 转发
+:::
+
+### 群信息
+
+- wx.showShareMenu --- withShareTicket: true
+- shareTicket app的 onLaunch onShow里获得
+- wx.getShareInfo(shareTicket) 获取群信息
+- 注意参数
+
+<slide :class="aligncenter">
+:::header
+引流 -》 跳转
+:::
+
+### 跳转
+
+##### 小程序到h5 (webview)
+- 只能在小程序内通过webview全屏打开
+- 需要到小程序管理后台做相应配置
+
+##### 小程序跳转到小程序
+- wx.navigateMiniProgram(OBJECT) 跳转到
+- wx.navigateBackMiniProgram(OBJECT) 跳转回
+- 需要到小程序管理后台做相应配置
+
+##### h5到小程序（jssdk）
+- wx.miniProgram.navigateTo
+- wx.miniProgram.redirectTo
+- wx.miniProgram.reLaunch
+
+##### 公众号跳转到小程序
+- 公众号菜单
+- 公众号模板消息
+- 公众号小程序绑定通知
+
+##### 打开app
+- 只能调回app
+
+<slide :class="aligncenter">
+:::header
+引流 -》 生成分享图
+:::
+
+### 生成分享图
+
+- drawImage 时 使用本地路径，wx.getImageInfo。
+- 用remSize作适配
+- arc clip 绘制带边框的圆形头像
+- wx.createCanvasContext，在非page组件使用时注意传this
+- catchtouchmove='preventTouchMove’
+
+<slide :class="aligncenter">
+### 模板消息机制
+
+<slide :class="aligncenter">
+:::header
+模板消息机制 -》 button样式重置
+:::
+### form-btn
+
+:::column
+
+```css
+button{
+  background-color:transparent;
+  padding:0;
+  margin:0;
+  display:block;
+  border:0;
+  border-radius:0;
+  z-index: 10;
+}
+button::after{
+  content:'';
+  width:0;
+  height:0;
+  -webkit-transform:scale(1);
+  transform:scale(1);
+  display:none;
+  background-color:transparent;
+}
+```
+
+---
+
+![](./public/Snip20190328_7.png)
+
+<slide :class="aligncenter">
+### 性能优化
+
+<slide :class="aligncenter">
+:::header
+性能优化 -》 常规优化
+:::
+
+### 常规优化
+
+- setData 次少，量少，与视图无关的状态数据保存于当前组件
+- 骨架图
+- 缓存数据
+- 分包优化首次打开时的速度
+- 注意setTimeout setInterval 在页面转场后的清理
+- 事件处理时组件的data放入尽可能少的数据
+- 尽量避免页面里定义onPageScroll，注意防抖
+
+<slide :class="aligncenter">
+:::header
+性能优化 -》 长列表
+:::
+### 长列表
+
+[recycle-view](https://github.com/wechat-miniprogram/recycle-view)
+
+计算只需要渲染的数据，不需要渲染的留空
+
+<slide :class="aligncenter">
+:::header
+性能优化 -》 预加载
+:::
+### 页预加载方案
+
+- 封装navigate组件 主动加载
+- 模拟setData 先暂存再设置
+
+<slide :class="aligncenter">
+### 开发者工具
+
+
+<slide :class="aligncenter">
+:::header
+开发者工具 -》 多账号调试
+:::
+
+### 多账号调试
+![](./public/Snip20190328_8.png)
+
+
+<slide :class="aligncenter">
+:::header
+开发者工具 -》 调优面板
+:::
+
+### 调优面板
+![](./public/Snip20190328_12.png)
+
+
+<slide :class="aligncenter">
+### 认证授权
+
+<slide :class="aligncenter">
+:::header
+认证授权 -》 认证流程
+:::
+
+### 认证流程
+
+- 用户访问入口
+- 调用业务接口
+- 业务接口返回401
+- wx.request拦截到401状态转向到auth page
+- auth page里进入登录确认用户身份
+- auth page认证成功后跳转到入口页
+- 入口业访问业务接口获取业务数据
+
+<slide :class="aligncenter">
+:::header
+认证授权 -》 二次授权
+:::
+
+### 二次授权
+wx.createRecordContext
+
+wx.getRecorderManager
+
+wx.openSetting
+
+
+<slide :class="aligncenter">
+### 状态管理
+
+<slide :class="aligncenter">
+:::header
+状态管理 -》 westore
+:::
+
+### westore
+[westore状态管理工具](https://github.com/Tencent/westore)，进阶版 [omix](https://github.com/Tencent/omi/tree/master/packages/omix)
+
+![](./public/Snip20190328_13.png)
+
+
+<slide :class="aligncenter">
+:::header
+状态管理 -》 wx.request
+:::
+
+### wx.request + graphql
+把80% 的领域模型数据，标准化到本地缓存.
+
+![](./public/Snip20190328_14.png)
