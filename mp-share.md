@@ -408,6 +408,7 @@ Component({
 - setData() 次数和数据量尽可能小，数据限制 1024kb，与视图有关的放this当前组件里
 
 - 入口页面把与请求有的东西放在 onShow 里
+{.build}
 
 <slide :class="aligncenter">
 
