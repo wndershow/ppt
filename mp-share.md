@@ -1124,3 +1124,14 @@ wx.openSetting
 把80% 的领域模型数据，标准化到本地缓存.
 
 ![](./public/Snip20190328_14.png)
+
+<slide :class="aligncenter">
+### 学习方法
+
+<slide :class="aligncenter">
+:::header
+学习方法
+:::
+
+### 学习方法
+没有比官方文档更好的学习途径
